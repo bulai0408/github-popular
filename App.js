@@ -6,8 +6,10 @@
  * @flow
  */
 
-import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View} from 'react-native';
+import React, { Component } from 'react';
+import { Platform, StyleSheet, Text, View, Image } from 'react-native';
+import TabNavigator from 'react-native-tab-navigator';
+// var ic_popular = require('./res/images/ic_popular.png');
 
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
@@ -17,12 +19,37 @@ const instructions = Platform.select({
 });
 
 export default class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      selectedTab: 'home',
+
+    }
+  }
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>111</Text>
-        <Text style={styles.instructions}>To get started, edit App.js</Text>
-        <Text style={styles.instructions}>{instructions}</Text>
+      <Text>111</Text>
+        {/* <TabNavigator>
+          <TabNavigator.Item
+            selected={this.state.selectedTab === 'home'}
+            title="Home"
+            // renderIcon={() => <Image source={ic_popular} />}
+            // renderSelectedIcon={() => <Image source={ic_popular} />}
+            badgeText="1"
+            onPress={() => this.setState({ selectedTab: 'home' })}>
+            <View style={styles.page1}></View>
+          </TabNavigator.Item>
+          <TabNavigator.Item
+            selected={this.state.selectedTab === 'profile'}
+            title="Profile"
+            // renderIcon={() => <Image source={require('./res/images/ic_trending.png')} />}
+            // renderSelectedIcon={() => <Image source={require('./res/images/ic_trending.png')} />}
+            renderBadge={() => <CustomBadgeView />}
+            onPress={() => this.setState({ selectedTab: 'profile' })}>
+            <View style={styles.page2}></View>
+          </TabNavigator.Item>
+        </TabNavigator> */}
       </View>
     );
   }
@@ -31,8 +58,6 @@ export default class App extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
     backgroundColor: '#F5FCFF',
   },
   welcome: {
@@ -45,4 +70,12 @@ const styles = StyleSheet.create({
     color: '#333333',
     marginBottom: 5,
   },
+  page1: {
+    flex: 1,
+    backgroundColor: 'red'
+  },
+  page2: {
+    flex: 1,
+    backgroundColor: 'blue'
+  }
 });
