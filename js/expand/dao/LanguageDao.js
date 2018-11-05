@@ -1,9 +1,10 @@
 import { AsyncStorage } from 'react-native'
 import keys from '../../../res/data/keys.json';
 
-const FLAG_LANGUAGE = { flag_langugage: 'flag_language_language', flag_key: 'flag_language_key' };
+export const FLAG_LANGUAGE = { flag_langugage: 'language_dao_language', flag_key: 'language_dao_key' };
+// export const FLAG_LANGUAGE = { flag_langugage: 'flag_language_language', flag_key: 'flag_language_key' };
 
-class LanguageDao {
+export default class LanguageDao {
   constructor(flag) {
     this.flag = flag;
   }
@@ -12,34 +13,30 @@ class LanguageDao {
       AsyncStorage.getItem(this.flag, (error, result) => {
         if (error) {
           reject(error);
+          return;
+        }
+        if (!result) {
+          var data = this.flag === FLAG_LANGUAGE.flag_key ? keys : null;
+          this.save(data);
+          resolve(data);
         } else {
-          if (result) {
-            try {
-              resolve(JSON.parse(result));
-            }
-            catch (error) {
-              reject(error)
-            }
-          } else {
-            var data = this.flag === FLAG_LANGUAGE.flag_key ? keys : null;
-            this.save(data);
-            resolve(data);
+          try {
+            resolve(JSON.parse(result));
+          }
+          catch (error) {
+            reject(error)
           }
         }
       });
     })
   }
 
-  save = (data) => {
+  save = (objectData) => {
+    var stringData = JSON.stringify(objectData);
     try {
-      AsyncStorage.save(this.flag, JSON.stringify(data));
+      AsyncStorage.setItem(this.flag, stringData);
     } catch (error) {
 
     }
   }
-}
-
-export {
-  FLAG_LANGUAGE,
-  LanguageDao
 }
