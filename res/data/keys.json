@@ -8,12 +8,12 @@
   {
     "path": "iOS",
     "name": "iOS",
-    "checked": false
+    "checked": true
   },
   {
     "path": "react-native",
     "name": "React Native",
-    "checked": false
+    "checked": true
   },
   {
     "path": "MySQL",
@@ -28,11 +28,11 @@
   {
     "path": " jQuery",
     "name": " jQuery",
-    "checked": false
+    "checked": true
   },
   {
     "path": " react",
     "name": " React",
-    "checked": false
+    "checked": true
   }
 ]

@@ -36,7 +36,7 @@ class CustomKeyPage extends React.Component {
       this.props.navigator.pop();
       return;
     }
-    Alert.alert('提示', '确定保存修改吗？', [
+    Alert.alert('提示', '是否保存修改？', [
       { text: '不保存', onPress: () => { this.props.navigator.pop() }, style: 'cancel' },
       { text: '保存', onPress: () => { this.onSave() } },
     ])
