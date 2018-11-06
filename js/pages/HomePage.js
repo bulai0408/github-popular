@@ -38,7 +38,7 @@ export default class HomePage extends Component {
             renderIcon={() => <Image style={styles.image} source={require('../../res/images/ic_popular.png')} />}
             renderSelectedIcon={() => <Image style={[styles.image, { tintColor: '#2196F3' }]} source={require('../../res/images/ic_popular.png')} />}
             onPress={() => this.setState({ selectedTab: 'tb_popular' })}>
-            <PopularPage />
+            <PopularPage {...this.props} />
           </TabNavigator.Item>
           <TabNavigator.Item
             selected={this.state.selectedTab === 'tb_trending'}
@@ -56,7 +56,7 @@ export default class HomePage extends Component {
             renderIcon={() => <Image style={styles.image} source={require('../../res/images/ic_popular.png')} />}
             renderSelectedIcon={() => <Image style={[styles.image, { tintColor: 'red' }]} source={require('../../res/images/ic_popular.png')} />}
             onPress={() => this.setState({ selectedTab: 'tb_favourite' })}>
-            <View style={styles.page1}></View>
+            <Text>1</Text>
           </TabNavigator.Item>
           <TabNavigator.Item
             selected={this.state.selectedTab === 'tb_my'}

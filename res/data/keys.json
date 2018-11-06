@@ -26,13 +26,43 @@
     "checked": false
   },
   {
-    "path": " jQuery",
-    "name": " jQuery",
+    "path": " react",
+    "name": " react",
     "checked": true
   },
   {
-    "path": " react",
-    "name": " React",
+    "path": " C",
+    "name": " C",
+    "checked": false
+  },
+  {
+    "path": " C++",
+    "name": " C++",
+    "checked": false
+  },
+  {
+    "path": " C#",
+    "name": " C#",
+    "checked": false
+  },
+  {
+    "path": " python",
+    "name": " python",
     "checked": true
+  },
+  {
+    "path": " Java",
+    "name": " Java",
+    "checked": true
+  },
+  {
+    "path": " Ruby",
+    "name": " Ruby",
+    "checked": false
+  },
+  {
+    "path": " Mongodb",
+    "name": " Mongodb",
+    "checked": false
   }
 ]

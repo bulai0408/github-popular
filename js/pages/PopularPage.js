@@ -6,6 +6,7 @@ import NavigationBar from '../common/NavigationBar';
 import DataRepository from '../expand/dao/DataRepository';
 import RepositoryCell from '../common/RepositoryCell';
 import LanguageDao, { FLAG_LANGUAGE } from '../expand/dao/LanguageDao';
+import RepositoryDetail from './RepositoryDetail';
 
 const URL = 'https://api.github.com/search/repositories?q=';
 const QUERY_STR = '&sort=stars';
@@ -25,6 +26,7 @@ export default class PopularPage extends Component {
 
   loadData = () => {
     this.LanguageDao.fetch().then(res => {
+      console.log(res);
       this.setState({ languages: res })
     })
       .catch(error => {
@@ -35,7 +37,7 @@ export default class PopularPage extends Component {
   render() {
     const { languages } = this.state;
     const languageViews = languages.map(item => (
-      item.checked ? <PopularTab key={item.name} tabLabel={item.name} /> : null
+      item.checked ? <PopularTab key={item.name} tabLabel={item.name} {...this.props} /> : null
     ));
     const content = languages.length > 0 ? (
       <ScrollableTabView
@@ -104,7 +106,21 @@ class PopularTab extends Component {
 
   genFetchUrl = (key) => URL + key + QUERY_STR;
 
-  renderItem = (data) => <RepositoryCell data={data.item} />
+  onSelect = (item) => {
+    this.props.navigator.push({
+      component: RepositoryDetail,
+      params: {
+        item,
+        ...this.props
+      }
+    })
+  }
+
+  renderItem = (data) => <RepositoryCell
+    onSelect={() => this.onSelect(data)}
+    key={data.id} 
+    data={data.item}
+  />
 
   keyExtractor = (item, index) => (item.id).toString();
 
