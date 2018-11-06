@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, TextInput, StyleSheet, ListView, FlatList, RefreshControl } from 'react-native';
+import { View, Text, TextInput, StyleSheet, ListView, FlatList, RefreshControl, DeviceEventEmitter } from 'react-native';
 import ScrollableTabView, { ScrollableTabBar } from 'react-native-scrollable-tab-view';
 
 import NavigationBar from '../common/NavigationBar';
@@ -79,12 +79,30 @@ class PopularTab extends Component {
   }
   loadData = () => {
     this.setState({ isLoading: true })
-    const { text } = this.state;
-    const url = URL + this.props.tabLabel + QUERY_STR;
-    this.dataRepository.fetchNetRepository(url)
-      .then(res => this.setState({ dataSource: res.items, isLoading: false }))
-      .catch(error => this.setState({ result: error }))
+    const url = this.genFetchUrl(this.props.tabLabel);
+    this.dataRepository.fetchRepository(url)
+      .then(res => {
+        const items = res && res.items ? res.items : (res ? res : []);
+        this.setState({ dataSource: items, isLoading: false });
+        if (res && res.update_date && (!this.dataRepository.checkData(res.update_date))) {
+          DeviceEventEmitter.emit('showToast', '数据过时')
+          return this.dataRepository.fetchNetRepository(url)
+        } else {
+          DeviceEventEmitter.emit('showToast', '显示缓存数据')
+        }
+      })
+      .then(res => {
+        const { items } = res;
+        if (!items || items.length === 0) return;
+        this.setState({
+          dataSource: items
+        })
+        DeviceEventEmitter.emit('showToast', '显示网络最新数据');
+      })
+      .catch(error => this.setState({ isLoading: false }))
   }
+
+  genFetchUrl = (key) => URL + key + QUERY_STR;
 
   renderItem = (data) => <RepositoryCell data={data.item} />
 

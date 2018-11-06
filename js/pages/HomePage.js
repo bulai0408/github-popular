@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { Platform, StyleSheet, Text, View, Image } from 'react-native';
+import { Platform, StyleSheet, Text, View, Image, DeviceEventEmitter } from 'react-native';
 import { Navigator } from 'react-native-deprecated-custom-components'
 import TabNavigator from 'react-native-tab-navigator';
+import Toast, { DURATION } from 'react-native-easy-toast';
 
 import PopularPage from './PopularPage';
 import AsyncStoragePage from '../../AsyncStoragePage';
@@ -15,6 +16,17 @@ export default class HomePage extends Component {
 
     }
   }
+
+  componentDidMount = () => {
+    this.listener = DeviceEventEmitter.addListener('showToast', (text => {
+      this.toast.show(text, DURATION.LENGTH_LONG);
+    }))
+  }
+
+  componentWillUnmount = () => {
+    this.listener && this.listener.remove();
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -56,6 +68,7 @@ export default class HomePage extends Component {
             <MyPage {...this.props} />
           </TabNavigator.Item>
         </TabNavigator>
+        <Toast ref={toast => this.toast = toast} />
       </View>
     );
   }
